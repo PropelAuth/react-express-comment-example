@@ -1,5 +1,7 @@
 ## React/Express comment system with authentication
 
+![Demo of the app](with_auth_example.gif)
+
 ### Technologies used
 
  - React for the frontend
