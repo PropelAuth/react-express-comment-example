@@ -8,6 +8,7 @@ import React from "react"
 import logo from "./logo.png"
 import Comments from "./components/Comments"
 import CreateComment from "./components/CreateComment"
+import AuthenticationButtons from "./components/AuthenticationButtons"
 
 const theme = createTheme({
     palette: {
@@ -22,9 +23,10 @@ export default function App() {
         <ThemeProvider theme={theme}>
             <AppBar position="static">
                 <Toolbar>
-                    <Grid container direction="row" alignItems="center">
-                        <img src={logo} height={50} alt="logo" />
-                    </Grid>
+                    <div style={{flex: 1}}>
+                        <img src={logo} height={50} width={150} alt="logo" />
+                    </div>
+                    <AuthenticationButtons />
                 </Toolbar>
             </AppBar>
             <Container>

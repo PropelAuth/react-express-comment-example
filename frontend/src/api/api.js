@@ -7,14 +7,14 @@ export const fetcher = (url) => {
     }).then((response) => response.json())
 }
 
-export const createComment = async (username, text) => {
+export const createComment = async (accessToken, text) => {
     const response = await fetch("/comments", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
+            "Authorization": `Bearer ${accessToken}`
         },
         body: JSON.stringify({
-            username: username,
             text: text,
         }),
     });

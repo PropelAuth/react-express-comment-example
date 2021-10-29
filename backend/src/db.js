@@ -15,7 +15,7 @@ const Comment = sequelize.define(
             type: DataTypes.TEXT,
             allowNull: false,
         },
-        username: {
+        userId: {
             type: DataTypes.TEXT,
             allowNull: false,
         },

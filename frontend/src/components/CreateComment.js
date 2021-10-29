@@ -1,12 +1,21 @@
 import { useState } from "react"
 import Button from "@mui/material/Button"
+import CircularProgress from "@mui/material/CircularProgress";
 import Grid from "@mui/material/Grid"
 import TextField from "@mui/material/TextField"
 import { createComment } from "../api/api"
 import { useSWRConfig } from "swr"
+import {withAuthInfo} from "@propelauth/react";
 
-function CreateComment() {
-    const [username, setUsername] = useState("")
+function CreateComment(props) {
+    if (props.isLoggedIn) {
+        return <CreateCommentLoggedIn accessToken={props.accessToken} />
+    } else {
+        return <div><br/>Please login or signup to post</div>
+    }
+}
+
+function CreateCommentLoggedIn({accessToken}) {
     const [text, setText] = useState("")
     const [error, setError] = useState("")
     const { mutate } = useSWRConfig()
@@ -14,7 +23,7 @@ function CreateComment() {
     const onSubmit = async (e) => {
         e.preventDefault()
         try {
-            await createComment(username, text)
+            await createComment(accessToken, text)
             setText("")
             setError(null)
 
@@ -31,15 +40,6 @@ function CreateComment() {
             <h3>Leave a comment</h3>
             <form onSubmit={onSubmit}>
                 <Grid container>
-                    <Grid item xs={4} pt={2}>
-                        <TextField
-                            label="Username"
-                            variant="filled"
-                            fullWidth
-                            value={username}
-                            onChange={(e) => setUsername(e.target.value)}
-                        />
-                    </Grid>
                     <Grid item xs={12} pt={2}>
                         <TextField
                             label="Comment"
@@ -64,4 +64,6 @@ function CreateComment() {
     )
 }
 
-export default CreateComment
+export default withAuthInfo(CreateComment, {
+    displayWhileLoading: <CircularProgress />
+})
